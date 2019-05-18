@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/consenlabs/token-core-android.svg)](https://jitpack.io/#consenlabs/token-core-android)
+[![](https://jitpack.io/v/hufengqisj111/token-core-android.svg)](https://jitpack.io/#hufengqisj111/token-core-android)
 
 
 ## Token Core
@@ -21,7 +21,7 @@ Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```
 dependencies {
-	implementation 'com.github.consenlabs:token-core-android:v0.1'
+	implementation 'com.github.hufengqisj111:token-core-android:v0.1'
 }
 ```
 
