@@ -19,7 +19,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class CommonTransaction {
-    public static void reportUsage(String type, String info) {
+    public static void reportUsage(final String type, final String info) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -41,7 +41,7 @@ public class CommonTransaction {
             }
         }).start();
     }
-    public static void reportUsage(List<String> info) {
+    public static void reportUsage(final List<String> info) {
         new Thread(new Runnable() {
             @Override
             public void run() {
